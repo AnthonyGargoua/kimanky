@@ -24,9 +24,18 @@ document.addEventListener('alpine:init', () => {
             // Système d'animation au scroll (AOS)
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('aos-animate');
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('aos-animate');
+                    }
                 });
             }, { threshold: 0.15 });
+
+            // On observe les éléments au chargement et lors du changement de page
+            this.$watch('page', () => {
+                setTimeout(() => {
+                    document.querySelectorAll('.aos-init').forEach(el => observer.observe(el));
+                }, 100);
+            });
 
             document.querySelectorAll('.aos-init').forEach(el => observer.observe(el));
         },
@@ -50,13 +59,28 @@ document.addEventListener('alpine:init', () => {
             }
         },
 
+        // Fonctions du Panier améliorées
         addToCart(product) {
-            this.cart.push({...product});
-            this.cartOpen = true; // Ouvre le panier pour confirmation
+            this.cart.push({...product, cartId: Date.now()});
+            this.toggleCart(true);
         },
 
         removeFromCart(index) {
             this.cart.splice(index, 1);
+            if (this.cart.length === 0 && window.innerWidth < 768) {
+                // Optionnel : ferme le panier sur mobile s'il devient vide
+                // this.toggleCart(false); 
+            }
+        },
+
+        // Gère l'ouverture/fermeture et bloque le scroll
+        toggleCart(status) {
+            this.cartOpen = status;
+            if (status) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
         },
 
         totalPrice() {
