@@ -1,43 +1,56 @@
 document.addEventListener('alpine:init', () => {
     Alpine.data('shop', () => ({
-        page: 'home',      // Page par défaut
-        mobileMenu: false, // État du menu mobile
-        cartOpen: false,   // État de la sidebar panier
-        notification: '',  // Texte du petit message d'alerte
-        cart: [],          // Tableau contenant les articles du panier
+        page: 'home',
+        mobileMenu: false,
+        cartOpen: false,
+        notification: '',
+        cart: [],
+        
+        // DATE DU DROP (Mets une date future pour tester)
+        dropDate: new Date("2026-06-01T20:00:00").getTime(),
+        countdown: { d: 0, h: 0, m: 0, s: 0 },
 
-        // Liste des produits
-        products: [
-            { id: 1, name: "Kimono 'Neo-Osaka'", price: 89, image: "https://images.unsplash.com/photo-1578301978018-3005759f48f7?q=80&w=800" },
-            { id: 2, name: "Hoodie Kanji Black", price: 55, image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800" },
-            { id: 3, name: "Pantalon Cargo Cyber", price: 75, image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=800" },
-            { id: 4, name: "T-shirt Print Geisha", price: 35, image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=800" },
-            { id: 5, name: "Veste Souvenir Tiger", price: 110, image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=800" },
-            { id: 6, name: "Casquette Tokyo Red", price: 29, image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=800" }
-        ],
-
-        // Ajouter au panier
-        addToCart(product) {
-            this.cart.push(product);
-            this.showNotification(`${product.name} ajouté !`);
+        init() {
+            // Animation du compteur
+            setInterval(() => {
+                const now = new Date().getTime();
+                const diff = this.dropDate - now;
+                if (diff > 0) {
+                    this.countdown.d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    this.countdown.h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    this.countdown.m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    this.countdown.s = Math.floor((diff % (1000 * 60)) / 1000);
+                }
+            }, 1000);
         },
 
-        // Supprimer du panier
+        products: [
+            { id: 1, name: "Hoodie Shinigami V1", price: 65, image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800" },
+            { id: 2, name: "Cargo 'Tech-Kyoto'", price: 85, image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=800" },
+            { id: 3, name: "Kimono Black Mesh", price: 120, image: "https://images.unsplash.com/photo-1578301978018-3005759f48f7?q=80&w=800" },
+            { id: 4, name: "Tee Oversize 'Akira'", price: 35, image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=800" },
+            { id: 5, name: "Veste Sukajan Tiger", price: 145, image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=800" },
+            { id: 6, name: "Cap Kanji Red", price: 30, image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=800" },
+            { id: 7, name: "Chemise Sumi-e", price: 45, image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=800" },
+            { id: 8, name: "Pantalon Dark Zen", price: 70, image: "https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=800" }
+        ],
+
+        addToCart(product) {
+            this.cart.push(product);
+            this.showNotification(`${product.name.toUpperCase()} AJOUTÉ`);
+        },
+
         removeFromCart(index) {
             this.cart.splice(index, 1);
         },
 
-        // Calculer le prix total
         totalPrice() {
             return this.cart.reduce((total, item) => total + item.price, 0);
         },
 
-        // Afficher une notification temporaire
         showNotification(msg) {
             this.notification = msg;
-            setTimeout(() => {
-                this.notification = '';
-            }, 3000); // Disparaît après 3 secondes
+            setTimeout(() => this.notification = '', 3000);
         }
     }))
 });
