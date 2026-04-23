@@ -14,7 +14,7 @@
     <nav class="sticky top-0 z-50 bg-white border-b-4 border-black">
         <div class="max-w-7xl mx-auto px-4 flex justify-between h-20 md:h-24 items-center">
             <div @click="page = 'home'; window.scrollTo(0,0)" class="cursor-pointer group">
-                <span class="text-2xl md:text-4xl font-black italic tracking-tighter">ANKY<span class="text-red-600 group-hover:text-black transition">JAP</span></span>
+                <span class="text-2xl md:text-4xl font-black italic tracking-tighter uppercase">ANKY<span class="text-red-600 group-hover:text-black transition">JAP</span></span>
             </div>
             
             <div class="hidden md:flex space-x-10 font-black text-xl tracking-widest uppercase">
@@ -46,105 +46,103 @@
 
     <main>
         <div x-show="page === 'home'" class="animate__animated animate__fadeIn">
-            <section class="hero-section relative">
-                <div class="text-center text-white px-4 z-10 w-full">
-                    <h1 class="text-6xl md:text-[13rem] font-black italic leading-none glitch" data-text="ANKYJAP">ANKYJAP</h1>
-                    <p class="text-sm md:text-3xl tracking-[0.5em] mt-4 uppercase font-bold text-red-600">Sacred Streetwear</p>
-                    <button @click="page = 'shop'" class="btn-shonen mt-12 uppercase text-sm tracking-widest">Entrer dans la légende</button>
+            
+            <section class="hero-section">
+                <div class="text-center z-10 px-4">
+                    <h1 class="glitch-title animate__animated animate__fadeInDown">ANKYJAP</h1>
+                    <p class="text-white text-lg md:text-3xl tracking-[0.5em] mt-6 uppercase font-bold">L'encre de Shibuya, le style du futur</p>
+                    <button @click="page = 'shop'" class="btn-shonen mt-12 text-sm md:text-base">ENTRER DANS LA LÉGENDE</button>
                 </div>
             </section>
 
-            <section class="py-24 max-w-7xl mx-auto px-6 aos-init">
-                <div class="flex flex-col md:flex-row items-center gap-16">
-                    <div class="w-full md:w-1/2 border-[10px] border-black shadow-[20px_20px_0px_0px_rgba(255,0,0,1)] transform hover:-translate-y-2 transition-all">
-                        <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?q=80&w=2070" class="w-full h-[500px] object-cover">
+            <section class="py-32 max-w-7xl mx-auto px-6 aos-init">
+                <div class="flex flex-col md:flex-row items-center gap-16 md:gap-24">
+                    <div class="w-full md:w-1/2 ink-splash-mask">
+                        <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?q=80&w=2070" alt="Streetwear Concept" class="w-full h-[400px] md:h-[600px]">
                     </div>
                     <div class="w-full md:w-1/2 space-y-8">
-                        <h2 class="text-6xl font-black italic uppercase leading-none">Né à <span class="text-red-600">Tokyo</span>,<br>Forger à Shibuya</h2>
-                        <p class="text-xl font-bold text-gray-800 leading-relaxed">Fusion entre l'esthétique Manga des années 90 et le Cyberpunk moderne. ANKYJAP n'est pas une marque, c'est une armure urbaine.</p>
+                        <h2 class="text-5xl md:text-7xl font-black italic leading-none"><span class="text-red-600 italic">SHINOBI</span> MODERNES</h2>
+                        <p class="text-xl md:text-2xl font-bold text-gray-800 leading-relaxed italic">
+                            Chaque pièce est forgée comme un katana. Nous ne suivons pas les modes, nous traçons notre propre voie dans le chaos de la ville. 
+                        </p>
+                        <div class="h-2 w-32 bg-black"></div>
                     </div>
                 </div>
             </section>
 
-            <section class="bg-black py-20 overflow-hidden border-y-8 border-red-600">
+            <section class="bg-black py-20 overflow-hidden border-y-[10px] border-red-600">
+                <div class="mb-12 px-6">
+                    <h2 class="text-white text-4xl md:text-6xl font-black italic">SÉLECTION <span class="text-red-600">LIMITÉE</span></h2>
+                </div>
                 <div class="animate-infinite-scroll flex gap-8">
                     <template x-for="product in [...products, ...products]" :key="Math.random()">
-                        <div class="min-w-[300px] md:min-w-[400px] bg-white border-4 border-black p-4 transform -rotate-2 hover:rotate-0 transition-all duration-500">
+                        <div class="min-w-[280px] md:min-w-[400px] bg-white border-4 border-black p-4 transform hover:scale-105 transition-all">
                             <img :src="product.image" class="w-full h-64 object-cover border-2 border-black">
                             <h3 class="text-2xl font-black mt-4 uppercase" x-text="product.name"></h3>
                             <p class="text-red-600 font-bold text-xl" x-text="product.price + '€'"></p>
+                            <button @click="addToCart(product)" class="mt-4 w-full bg-black text-white py-2 font-black uppercase hover:bg-red-600">Ajouter</button>
                         </div>
                     </template>
                 </div>
             </section>
 
-            <section class="py-24 max-w-7xl mx-auto px-6 aos-init">
-                <div class="flex flex-col-reverse md:flex-row items-center gap-16">
+            <section class="py-32 max-w-7xl mx-auto px-6 aos-init">
+                <div class="flex flex-col-reverse md:flex-row items-center gap-16 md:gap-24">
                     <div class="w-full md:w-1/2 space-y-8 md:text-right">
-                        <h2 class="text-6xl font-black italic uppercase leading-none">Qualité <span class="text-red-600">Immortelle</span></h2>
-                        <p class="text-xl font-bold text-gray-800 leading-relaxed">Chaque couture est un pacte. Tissus lourds, sérigraphies haute-densité et coupes étudiées pour le combat quotidien.</p>
-                        <button @click="page = 'shop'" class="btn-shonen">Voir la collection</button>
+                        <h2 class="text-5xl md:text-7xl font-black italic leading-none">L'ENCRE <span class="text-red-600 italic">IMMORTELLE</span></h2>
+                        <p class="text-xl md:text-2xl font-bold text-gray-800 leading-relaxed italic">
+                            Inspiré par le Sumi-e traditionnel, notre design capture l'éphémère et le puissant. Une fusion visuelle qui ne s'efface jamais.
+                        </p>
+                        <div class="h-2 w-32 bg-black ml-auto"></div>
                     </div>
-                    <div class="w-full md:w-1/2 border-[10px] border-black shadow-[-20px_20px_0px_0px_rgba(0,0,0,1)]">
-                        <img src="https://images.unsplash.com/photo-1533972751724-9135a8410a4c?q=80&w=1974" class="w-full h-[500px] object-cover">
+                    <div class="w-full md:w-1/2 ink-splash-mask">
+                        <img src="https://images.unsplash.com/photo-1533972751724-9135a8410a4c?q=80&w=1974" alt="Streetwear Quality" class="w-full h-[400px] md:h-[600px]">
                     </div>
                 </div>
             </section>
         </div>
 
         <div x-show="page === 'shop'" class="max-w-7xl mx-auto py-20 px-6 animate__animated animate__fadeIn">
-            <h2 class="text-7xl md:text-9xl font-black italic uppercase mb-16 border-b-8 border-black">Shop</h2>
+            <h2 class="text-6xl md:text-9xl font-black italic uppercase mb-16 border-b-8 border-black">Boutique</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <template x-for="product in products" :key="product.id">
-                    <div class="product-card bg-white p-2">
-                        <div class="relative overflow-hidden aspect-[3/4] bg-gray-100 border-2 border-black">
+                    <div class="bg-white border-4 border-black p-2 hover:shadow-[15px_15px_0px_0px_rgba(255,0,0,1)] transition-all transform hover:-translate-y-2">
+                        <div class="relative overflow-hidden aspect-[3/4] border-2 border-black">
                             <img :src="product.image" class="w-full h-full object-cover">
-                            <button @click="addToCart(product)" class="absolute bottom-0 w-full bg-black text-white py-4 font-black uppercase transform translate-y-full hover:translate-y-0 transition-transform duration-300 active:bg-red-600">Ajouter</button>
+                            <button @click="addToCart(product)" class="absolute bottom-0 w-full bg-black text-white py-4 font-black uppercase transform translate-y-full hover:translate-y-0 transition-all active:bg-red-600">Prendre</button>
                         </div>
                         <div class="p-4 flex justify-between items-center">
                             <div>
-                                <p class="font-black uppercase text-xs truncate max-w-[150px]" x-text="product.name"></p>
+                                <p class="font-black uppercase text-xs" x-text="product.name"></p>
                                 <p class="text-red-600 font-bold text-lg" x-text="product.price + '€'"></p>
                             </div>
-                            <button @click="addToCart(product)" class="bg-black text-white p-2 md:hidden">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="3"></path></svg>
-                            </button>
                         </div>
                     </div>
                 </template>
             </div>
         </div>
 
-        <div x-show="page === 'drop'" class="min-h-screen bg-black text-white animate__animated animate__fadeIn flex flex-col pt-10">
-            <div class="bg-red-600 py-6 overflow-hidden border-y-4 border-white">
-                <div class="animate-infinite-scroll flex font-black uppercase italic text-4xl whitespace-nowrap">
-                    <span class="mx-8">NO RESTOCK // NO RESTOCK // NO RESTOCK // NO RESTOCK //</span>
-                </div>
-            </div>
-
-            <div class="flex-1 flex flex-col items-center justify-center py-20 px-4">
-                <div class="flex space-x-4 md:space-x-12 text-center mb-16">
-                    <div><span class="text-6xl md:text-[12rem] font-black block leading-none" x-text="countdown.d"></span><p class="text-red-600 font-bold">JOURS</p></div>
-                    <div class="text-6xl md:text-[12rem] font-black leading-none">:</div>
-                    <div><span class="text-6xl md:text-[12rem] font-black block leading-none" x-text="countdown.h"></span><p class="text-red-600 font-bold">HEURES</p></div>
-                    <div class="text-6xl md:text-[12rem] font-black leading-none">:</div>
-                    <div><span class="text-6xl md:text-[12rem] font-black block leading-none" x-text="countdown.s"></span><p class="text-red-600 font-bold">SECONDES</p></div>
+        <div x-show="page === 'drop'" class="min-h-screen bg-black text-white animate__animated animate__fadeIn flex flex-col justify-center items-center">
+            <div class="text-center space-y-12 px-4">
+                <h2 class="text-5xl md:text-8xl font-black italic uppercase italic">PROCHAIN <span class="text-red-600">DROP</span></h2>
+                
+                <div class="flex space-x-4 md:space-x-12 text-center">
+                    <div class="bg-white text-black p-4 md:p-8 border-b-8 border-red-600"><span class="text-4xl md:text-8xl font-black block" x-text="countdown.d"></span><p class="text-xs font-bold uppercase tracking-widest">Jours</p></div>
+                    <div class="bg-white text-black p-4 md:p-8 border-b-8 border-red-600"><span class="text-4xl md:text-8xl font-black block" x-text="countdown.h"></span><p class="text-xs font-bold uppercase tracking-widest">Heures</p></div>
+                    <div class="bg-white text-black p-4 md:p-8 border-b-8 border-red-600"><span class="text-4xl md:text-8xl font-black block" x-text="countdown.m"></span><p class="text-xs font-bold uppercase tracking-widest">Mins</p></div>
+                    <div class="bg-white text-black p-4 md:p-8 border-b-8 border-red-600"><span class="text-4xl md:text-8xl font-black block" x-text="countdown.s"></span><p class="text-xs font-bold uppercase tracking-widest">Secs</p></div>
                 </div>
 
-                <div class="max-w-2xl w-full text-center">
+                <div class="max-w-xl mx-auto">
                     <template x-if="!mailSubmitted">
-                        <div class="space-y-8">
-                            <p class="text-xl tracking-widest uppercase italic font-bold">Infiltre le temple avant l'ouverture</p>
-                            <div class="flex flex-col md:flex-row border-4 border-white bg-white/10">
-                                <input x-model="email" type="email" placeholder="TON_EMAIL@SHINOBI.COM" class="flex-1 bg-transparent p-6 text-white outline-none font-bold text-lg">
-                                <button @click="submitMail()" class="bg-white text-black px-12 py-6 font-black hover:bg-red-600 hover:text-white transition uppercase">Rejoindre</button>
-                            </div>
+                        <div class="flex flex-col md:flex-row border-4 border-white bg-transparent p-2">
+                            <input x-model="email" type="email" placeholder="TON@EMAIL.COM" class="bg-transparent flex-1 p-4 outline-none font-bold text-lg">
+                            <button @click="submitMail()" class="bg-white text-black px-8 py-4 font-black hover:bg-red-600 hover:text-white transition uppercase">S'inscrire</button>
                         </div>
                     </template>
                     <template x-if="mailSubmitted">
-                        <div class="bg-red-600 p-12 border-4 border-white animate__animated animate__zoomIn">
-                            <h3 class="text-4xl font-black uppercase mb-4 italic">ACCÈS AUTORISÉ ⛩️</h3>
-                            <p class="font-bold tracking-widest">Le parchemin d'accès t'attend dans tes mails.</p>
+                        <div class="bg-red-600 p-8 border-4 border-white animate__animated animate__zoomIn">
+                            <h3 class="text-3xl font-black italic uppercase">INSCRIPTION VALIDÉE ⛩️</h3>
                         </div>
                     </template>
                 </div>
@@ -154,26 +152,26 @@
 
     <div x-show="cartOpen" class="fixed inset-0 z-[100]" style="display: none;">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" @click="cartOpen = false"></div>
-        <div class="absolute inset-y-0 right-0 w-full md:max-w-md bg-white p-8 flex flex-col shadow-[-10px_0px_0px_0px_rgba(255,0,0,1)]">
+        <div class="absolute inset-y-0 right-0 w-full md:max-w-md bg-white p-8 flex flex-col shadow-[-15px_0px_0px_0px_rgba(255,0,0,1)]">
             <div class="flex justify-between items-center mb-10 border-b-8 border-black pb-4">
                 <h2 class="text-4xl font-black italic">PANIER</h2>
-                <button @click="cartOpen = false" class="text-5xl font-light">&times;</button>
+                <button @click="cartOpen = false" class="text-5xl font-light hover:text-red-600 transition">&times;</button>
             </div>
             <div class="flex-1 overflow-y-auto">
                 <template x-for="(item, index) in cart" :key="index">
-                    <div class="flex items-center space-x-4 mb-6 p-2 border-2 border-black">
+                    <div class="flex items-center space-x-4 mb-6 p-4 border-2 border-black bg-gray-50">
                         <img :src="item.image" class="w-20 h-24 object-cover border-2 border-black">
                         <div class="flex-1">
                             <p class="font-black text-sm uppercase" x-text="item.name"></p>
                             <p class="text-red-600 font-bold" x-text="item.price + '€'"></p>
                         </div>
-                        <button @click="removeFromCart(index)" class="text-xs font-black underline hover:text-red-600">BYE BYE</button>
+                        <button @click="removeFromCart(index)" class="text-xs font-black underline hover:text-red-600">RETIRER</button>
                     </div>
                 </template>
             </div>
             <div class="pt-6 border-t-8 border-black">
-                <div class="flex justify-between text-3xl font-black mb-8"><span>TOTAL</span><span x-text="totalPrice() + '€'"></span></div>
-                <button class="w-full bg-black text-white py-6 font-black text-xl hover:bg-red-600 transition shadow-[8px_8px_0px_rgba(0,0,0,0.2)]">VALIDER LA COMMANDE</button>
+                <div class="flex justify-between text-3xl font-black mb-8 uppercase"><span>Total</span><span x-text="totalPrice() + '€'"></span></div>
+                <button class="w-full bg-black text-white py-6 font-black text-xl hover:bg-red-600 transition">PASSER LA COMMANDE</button>
             </div>
         </div>
     </div>
