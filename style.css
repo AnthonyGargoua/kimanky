@@ -2,34 +2,42 @@
 
 :root {
     --japan-red: #BC002D;
+    --black: #050505; /* Noir plus profond */
 }
 
 body {
     font-family: 'Plus Jakarta Sans', 'Noto Sans JP', sans-serif;
     overflow-x: hidden;
     background-color: #fff;
+    cursor: crosshair; /* Curseur Waouh */
 }
 
 [x-cloak] { display: none !important; }
 
 .japan-red { color: var(--japan-red); }
 
-/* Logo & Nav */
+/* Logo & Glitch Effect */
 .logo-text {
     font-weight: 800;
     letter-spacing: -2px;
+    position: relative;
 }
 
+.logo-text:hover {
+    animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+}
+
+/* Nav */
 .nav-link {
     font-weight: 800;
     font-size: 0.75rem;
     letter-spacing: 0.2em;
     transition: 0.3s;
-    position: relative;
 }
 
 .nav-active {
     color: var(--japan-red);
+    text-decoration: line-through; /* Style agressif */
 }
 
 /* Cart Badge */
@@ -52,45 +60,59 @@ body {
 /* Hero Section */
 .hero-section {
     position: relative;
-    height: 90vh;
+    height: 100vh; /* Pleine hauteur */
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url('https://images.unsplash.com/photo-1533929736458-ca588d08c8be?q=80&w=2000');
-    background-size: cover;
-    background-position: center;
+    overflow: hidden;
+    background: var(--black);
 }
 
-.hero-overlay {
+/* Image de fond avec effet de zoom lent */
+.hero-bg {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    background-image: url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=2000');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+    animation: slowZoom 20s infinite alternate;
 }
 
 .btn-primary {
-    background-color: #fff;
-    color: #000;
+    background-color: var(--japan-red);
+    color: #fff;
     padding: 1.2rem 3rem;
     font-weight: 900;
     letter-spacing: 0.3em;
-    transition: 0.4s;
-    font-style: italic;
+    transition: 0.4s ease-out;
+    border: 2px solid var(--japan-red);
 }
 
 .btn-primary:hover {
-    background-color: var(--japan-red);
+    background-color: transparent;
     color: #fff;
-    transform: scale(1.05);
+    border-color: #fff;
 }
 
 /* Products */
 .product-card {
     border: 2px solid #000;
-    transition: transform 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
 }
 
 .product-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
+    box-shadow: 10px 10px 0px rgba(0,0,0,1);
+}
+
+.product-image {
+    transition: transform 0.7s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
 }
 
 .add-to-cart-btn {
@@ -102,6 +124,8 @@ body {
     padding: 1.2rem;
     transform: translateY(100%);
     transition: 0.3s;
+    font-style: italic;
+    font-weight: 900;
 }
 
 .product-card:hover .add-to-cart-btn {
@@ -110,6 +134,21 @@ body {
 
 .add-to-cart-btn:hover {
     background: var(--japan-red);
+}
+
+.sold-out-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.8);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    transform: rotate(-15deg);
+    z-index: 10;
 }
 
 /* Form */
@@ -128,7 +167,56 @@ body {
 }
 
 /* Custom Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #f1f1f1; }
-::-webkit-scrollbar-thumb { background: #000; }
-::-webkit-scrollbar-thumb:hover { background: var(--japan-red); }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--japan-red); }
+
+/* --- ANIMATIONS PERSOS --- */
+
+@keyframes slowZoom {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+/* Marquee Drop */
+.marquee {
+    width: 100vw;
+    max-width: 100%;
+    height: 50px;
+    overflow: hidden;
+    position: relative;
+    background: var(--japan-red);
+    color: white;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.marquee-content {
+    display: flex;
+    width: 200%;
+    animation: marqueeAnimation 10s linear infinite;
+}
+
+.marquee-item {
+    width: 50%;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+@keyframes marqueeAnimation {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+}
