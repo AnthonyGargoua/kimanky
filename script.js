@@ -4,14 +4,26 @@ document.addEventListener('alpine:init', () => {
         cartOpen: false,
         cart: [],
         
+        // Logique Mail
+        email: '',
+        mailSubmitted: false,
+        
         // --- DATE DU DROP ---
-        // Change ici pour une date dans le futur
         dropDate: new Date(2026, 11, 25, 20, 0, 0).getTime(), 
         countdown: { d: "00", h: "00", m: "00", s: "00" },
 
         init() {
             this.updateCounter();
             setInterval(() => this.updateCounter(), 1000);
+        },
+
+        submitMail() {
+            if (this.email.includes('@')) {
+                this.mailSubmitted = true;
+                // Ici tu pourrais ajouter un envoi vers une base de données
+            } else {
+                alert("Veuillez entrer un email valide.");
+            }
         },
 
         updateCounter() {
@@ -23,8 +35,6 @@ document.addEventListener('alpine:init', () => {
                 this.countdown.h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
                 this.countdown.m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
                 this.countdown.s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-            } else {
-                this.countdown = { d: "00", h: "00", m: "00", s: "00" };
             }
         },
 
