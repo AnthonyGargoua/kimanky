@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-white text-black font-sans overflow-x-hidden" x-data="shop" x-cloak>
+<body class="bg-white text-black font-sans overflow-x-hidden" x-data="shop" x-init="init()">
 
     <nav class="sticky top-0 z-50 bg-white border-b-4 border-black">
         <div class="max-w-7xl mx-auto px-4 flex justify-between h-20 md:h-24 items-center">
@@ -27,151 +27,126 @@
 
             <div class="flex items-center space-x-4">
                 <button @click="cartOpen = true" class="relative p-2 group">
-                    <svg class="w-8 h-8 md:w-10 md:h-10 transition group-hover:text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                     <span class="absolute top-0 right-0 bg-red-600 text-white text-[10px] md:text-xs w-5 h-5 md:w-6 md:h-6 flex items-center justify-center rounded-full font-black" x-text="cart.length"></span>
                 </button>
-                <button @click="mobileMenu = !mobileMenu" class="md:hidden p-2 border-2 border-black">
-                    <svg x-show="!mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                    <svg x-show="mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
             </div>
-        </div>
-
-        <div x-show="mobileMenu" x-transition class="md:hidden bg-white border-b-4 border-black p-4 space-y-4 font-black uppercase text-center text-xl">
-            <button @click="page = 'home'; mobileMenu = false" class="block w-full py-2">Accueil</button>
-            <button @click="page = 'shop'; mobileMenu = false" class="block w-full py-2 border-y border-gray-100">Boutique</button>
-            <button @click="page = 'drop'; mobileMenu = false" class="block w-full py-2 text-red-600">★ Drop ★</button>
         </div>
     </nav>
 
     <main>
         <div x-show="page === 'home'" class="animate__animated animate__fadeIn">
-            
-            <section class="hero-section">
+            <section class="hero-section flex items-center justify-center">
                 <div class="text-center z-10 px-4">
-                    <h1 class="glitch-title animate__animated animate__fadeInDown">ANKYJAP</h1>
-                    <p class="text-white text-lg md:text-3xl tracking-[0.5em] mt-6 uppercase font-bold">L'encre de Shibuya, le style du futur</p>
-                    <button @click="page = 'shop'" class="btn-shonen mt-12 text-sm md:text-base">ENTRER DANS LA LÉGENDE</button>
+                    <h1 class="glitch-title">ANKYJAP</h1>
+                    <p class="text-white text-lg md:text-3xl tracking-[0.3em] mt-6 uppercase font-black italic">Inked in Shibuya</p>
+                    <button @click="page = 'shop'" class="btn-shonen mt-12">VOIR LA COLLECTION</button>
                 </div>
             </section>
 
-            <section class="py-32 max-w-7xl mx-auto px-6 aos-init">
-                <div class="flex flex-col md:flex-row items-center gap-16 md:gap-24">
-                    <div class="w-full md:w-1/2 ink-splash-mask">
-                        <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?q=80&w=2070" alt="Streetwear Concept" class="w-full h-[400px] md:h-[600px]">
+            <section class="py-24 max-w-7xl mx-auto px-6 aos-init">
+                <div class="flex flex-col md:flex-row items-center gap-16">
+                    <div class="w-full md:w-1/2">
+                        <div class="ink-splash-mask shadow-xl">
+                            <img src="https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?q=80&w=2070" class="w-full h-full object-cover">
+                        </div>
                     </div>
-                    <div class="w-full md:w-1/2 space-y-8">
-                        <h2 class="text-5xl md:text-7xl font-black italic leading-none"><span class="text-red-600 italic">SHINOBI</span> MODERNES</h2>
-                        <p class="text-xl md:text-2xl font-bold text-gray-800 leading-relaxed italic">
-                            Chaque pièce est forgée comme un katana. Nous ne suivons pas les modes, nous traçons notre propre voie dans le chaos de la ville. 
-                        </p>
-                        <div class="h-2 w-32 bg-black"></div>
+                    <div class="w-full md:w-1/2 space-y-6">
+                        <h2 class="text-5xl md:text-7xl font-black italic uppercase leading-none">L'Esprit <span class="text-red-600">Ronin</span></h2>
+                        <p class="text-xl font-bold text-gray-800 italic">ANKYJAP fusionne l'agressivité du manga rétro avec la technicité urbaine. Pas de règles, juste du style.</p>
                     </div>
                 </div>
             </section>
 
-            <section class="bg-black py-20 overflow-hidden border-y-[10px] border-red-600">
-                <div class="mb-12 px-6">
-                    <h2 class="text-white text-4xl md:text-6xl font-black italic">SÉLECTION <span class="text-red-600">LIMITÉE</span></h2>
-                </div>
+            <section class="bg-black py-20 overflow-hidden border-y-8 border-red-600">
                 <div class="animate-infinite-scroll flex gap-8">
-                    <template x-for="product in [...products, ...products]" :key="Math.random()">
-                        <div class="min-w-[280px] md:min-w-[400px] bg-white border-4 border-black p-4 transform hover:scale-105 transition-all">
+                    <template x-for="product in products" :key="product.id">
+                        <div class="min-w-[300px] bg-white border-4 border-black p-4">
                             <img :src="product.image" class="w-full h-64 object-cover border-2 border-black">
-                            <h3 class="text-2xl font-black mt-4 uppercase" x-text="product.name"></h3>
-                            <p class="text-red-600 font-bold text-xl" x-text="product.price + '€'"></p>
-                            <button @click="addToCart(product)" class="mt-4 w-full bg-black text-white py-2 font-black uppercase hover:bg-red-600">Ajouter</button>
+                            <h3 class="text-xl font-black mt-4 uppercase" x-text="product.name"></h3>
+                            <button @click="page = 'shop'" class="mt-2 text-red-600 font-black underline">DÉCOUVRIR</button>
+                        </div>
+                    </template>
+                    <template x-for="product in products" :key="'copy-'+product.id">
+                        <div class="min-w-[300px] bg-white border-4 border-black p-4">
+                            <img :src="product.image" class="w-full h-64 object-cover border-2 border-black">
+                            <h3 class="text-xl font-black mt-4 uppercase" x-text="product.name"></h3>
+                            <button @click="page = 'shop'" class="mt-2 text-red-600 font-black underline">DÉCOUVRIR</button>
                         </div>
                     </template>
                 </div>
             </section>
 
-            <section class="py-32 max-w-7xl mx-auto px-6 aos-init">
-                <div class="flex flex-col-reverse md:flex-row items-center gap-16 md:gap-24">
-                    <div class="w-full md:w-1/2 space-y-8 md:text-right">
-                        <h2 class="text-5xl md:text-7xl font-black italic leading-none">L'ENCRE <span class="text-red-600 italic">IMMORTELLE</span></h2>
-                        <p class="text-xl md:text-2xl font-bold text-gray-800 leading-relaxed italic">
-                            Inspiré par le Sumi-e traditionnel, notre design capture l'éphémère et le puissant. Une fusion visuelle qui ne s'efface jamais.
-                        </p>
-                        <div class="h-2 w-32 bg-black ml-auto"></div>
+            <section class="py-24 max-w-7xl mx-auto px-6 aos-init">
+                <div class="flex flex-col-reverse md:flex-row items-center gap-16">
+                    <div class="w-full md:w-1/2 space-y-6 md:text-right">
+                        <h2 class="text-5xl md:text-7xl font-black italic uppercase leading-none">Qualité <span class="text-red-600">Sumi-e</span></h2>
+                        <p class="text-xl font-bold text-gray-800 italic">Des tissus lourds comme une armure, des visuels noirs comme l'encre japonaise. Conçu pour durer.</p>
                     </div>
-                    <div class="w-full md:w-1/2 ink-splash-mask">
-                        <img src="https://images.unsplash.com/photo-1533972751724-9135a8410a4c?q=80&w=1974" alt="Streetwear Quality" class="w-full h-[400px] md:h-[600px]">
+                    <div class="w-full md:w-1/2">
+                        <div class="ink-splash-mask shadow-xl">
+                            <img src="https://images.unsplash.com/photo-1533972751724-9135a8410a4c?q=80&w=1974" class="w-full h-full object-cover">
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
 
         <div x-show="page === 'shop'" class="max-w-7xl mx-auto py-20 px-6 animate__animated animate__fadeIn">
-            <h2 class="text-6xl md:text-9xl font-black italic uppercase mb-16 border-b-8 border-black">Boutique</h2>
+            <h2 class="text-7xl md:text-9xl font-black italic uppercase mb-16 border-b-8 border-black">Shop</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <template x-for="product in products" :key="product.id">
-                    <div class="bg-white border-4 border-black p-2 hover:shadow-[15px_15px_0px_0px_rgba(255,0,0,1)] transition-all transform hover:-translate-y-2">
+                    <div class="bg-white border-4 border-black p-2 group overflow-hidden">
                         <div class="relative overflow-hidden aspect-[3/4] border-2 border-black">
-                            <img :src="product.image" class="w-full h-full object-cover">
-                            <button @click="addToCart(product)" class="absolute bottom-0 w-full bg-black text-white py-4 font-black uppercase transform translate-y-full hover:translate-y-0 transition-all active:bg-red-600">Prendre</button>
+                            <img :src="product.image" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                            <button @click="addToCart(product)" class="absolute inset-x-0 bottom-0 bg-black text-white py-4 font-black uppercase transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                Ajouter au panier
+                            </button>
                         </div>
-                        <div class="p-4 flex justify-between items-center">
-                            <div>
-                                <p class="font-black uppercase text-xs" x-text="product.name"></p>
-                                <p class="text-red-600 font-bold text-lg" x-text="product.price + '€'"></p>
-                            </div>
+                        <div class="p-4 flex justify-between">
+                            <p class="font-black uppercase text-xs" x-text="product.name"></p>
+                            <p class="text-red-600 font-bold" x-text="product.price + '€'"></p>
                         </div>
                     </div>
                 </template>
             </div>
         </div>
 
-        <div x-show="page === 'drop'" class="min-h-screen bg-black text-white animate__animated animate__fadeIn flex flex-col justify-center items-center">
-            <div class="text-center space-y-12 px-4">
-                <h2 class="text-5xl md:text-8xl font-black italic uppercase italic">PROCHAIN <span class="text-red-600">DROP</span></h2>
-                
-                <div class="flex space-x-4 md:space-x-12 text-center">
-                    <div class="bg-white text-black p-4 md:p-8 border-b-8 border-red-600"><span class="text-4xl md:text-8xl font-black block" x-text="countdown.d"></span><p class="text-xs font-bold uppercase tracking-widest">Jours</p></div>
-                    <div class="bg-white text-black p-4 md:p-8 border-b-8 border-red-600"><span class="text-4xl md:text-8xl font-black block" x-text="countdown.h"></span><p class="text-xs font-bold uppercase tracking-widest">Heures</p></div>
-                    <div class="bg-white text-black p-4 md:p-8 border-b-8 border-red-600"><span class="text-4xl md:text-8xl font-black block" x-text="countdown.m"></span><p class="text-xs font-bold uppercase tracking-widest">Mins</p></div>
-                    <div class="bg-white text-black p-4 md:p-8 border-b-8 border-red-600"><span class="text-4xl md:text-8xl font-black block" x-text="countdown.s"></span><p class="text-xs font-bold uppercase tracking-widest">Secs</p></div>
-                </div>
-
-                <div class="max-w-xl mx-auto">
-                    <template x-if="!mailSubmitted">
-                        <div class="flex flex-col md:flex-row border-4 border-white bg-transparent p-2">
-                            <input x-model="email" type="email" placeholder="TON@EMAIL.COM" class="bg-transparent flex-1 p-4 outline-none font-bold text-lg">
-                            <button @click="submitMail()" class="bg-white text-black px-8 py-4 font-black hover:bg-red-600 hover:text-white transition uppercase">S'inscrire</button>
-                        </div>
-                    </template>
-                    <template x-if="mailSubmitted">
-                        <div class="bg-red-600 p-8 border-4 border-white animate__animated animate__zoomIn">
-                            <h3 class="text-3xl font-black italic uppercase">INSCRIPTION VALIDÉE ⛩️</h3>
-                        </div>
-                    </template>
-                </div>
+        <div x-show="page === 'drop'" class="min-h-screen bg-black text-white flex flex-col justify-center items-center">
+            <h2 class="text-6xl md:text-9xl font-black italic mb-12">DROP <span class="text-red-600">LIMITÉ</span></h2>
+            <div class="flex gap-4 md:gap-8 mb-12">
+                <div class="text-center"><span class="text-5xl md:text-8xl font-black" x-text="countdown.d"></span><p>JOURS</p></div>
+                <div class="text-center"><span class="text-5xl md:text-8xl font-black" x-text="countdown.h"></span><p>HEURES</p></div>
+                <div class="text-center"><span class="text-5xl md:text-8xl font-black" x-text="countdown.m"></span><p>MINS</p></div>
             </div>
         </div>
     </main>
 
-    <div x-show="cartOpen" class="fixed inset-0 z-[100]" style="display: none;">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" @click="cartOpen = false"></div>
-        <div class="absolute inset-y-0 right-0 w-full md:max-w-md bg-white p-8 flex flex-col shadow-[-15px_0px_0px_0px_rgba(255,0,0,1)]">
-            <div class="flex justify-between items-center mb-10 border-b-8 border-black pb-4">
-                <h2 class="text-4xl font-black italic">PANIER</h2>
-                <button @click="cartOpen = false" class="text-5xl font-light hover:text-red-600 transition">&times;</button>
+    <div x-show="cartOpen" class="fixed inset-0 z-[100]" x-transition>
+        <div class="absolute inset-0 bg-black/90" @click="cartOpen = false"></div>
+        <div class="absolute inset-y-0 right-0 w-full md:max-w-md bg-white p-8 flex flex-col border-l-8 border-red-600">
+            <div class="flex justify-between items-center mb-10 border-b-4 border-black pb-4">
+                <h2 class="text-4xl font-black italic uppercase">Ton Pack</h2>
+                <button @click="cartOpen = false" class="text-4xl font-light">&times;</button>
             </div>
             <div class="flex-1 overflow-y-auto">
                 <template x-for="(item, index) in cart" :key="index">
-                    <div class="flex items-center space-x-4 mb-6 p-4 border-2 border-black bg-gray-50">
-                        <img :src="item.image" class="w-20 h-24 object-cover border-2 border-black">
+                    <div class="flex gap-4 mb-6 p-2 border-2 border-black">
+                        <img :src="item.image" class="w-16 h-20 object-cover">
                         <div class="flex-1">
-                            <p class="font-black text-sm uppercase" x-text="item.name"></p>
+                            <p class="font-black text-xs uppercase" x-text="item.name"></p>
                             <p class="text-red-600 font-bold" x-text="item.price + '€'"></p>
                         </div>
-                        <button @click="removeFromCart(index)" class="text-xs font-black underline hover:text-red-600">RETIRER</button>
+                        <button @click="removeFromCart(index)" class="text-xs font-black underline">X</button>
                     </div>
                 </template>
             </div>
-            <div class="pt-6 border-t-8 border-black">
-                <div class="flex justify-between text-3xl font-black mb-8 uppercase"><span>Total</span><span x-text="totalPrice() + '€'"></span></div>
-                <button class="w-full bg-black text-white py-6 font-black text-xl hover:bg-red-600 transition">PASSER LA COMMANDE</button>
+            <div class="pt-6 border-t-4 border-black mt-4">
+                <div class="flex justify-between text-2xl font-black uppercase mb-6">
+                    <span>Total</span>
+                    <span x-text="totalPrice() + '€'"></span>
+                </div>
+                <button class="w-full bg-black text-white py-4 font-black uppercase hover:bg-red-600 transition">Valider</button>
             </div>
         </div>
     </div>
