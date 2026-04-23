@@ -3,91 +3,48 @@
 :root {
     --red: #ff0000;
     --black: #000000;
-    --white: #ffffff;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Space Grotesk', sans-serif; }
+h1, h2, h3, .font-black { font-family: 'Archivo Black', sans-serif; }
 
-body {
-    font-family: 'Space Grotesk', sans-serif;
-    background-color: var(--white);
-    color: var(--black);
-    overflow-x: hidden;
-}
-
-/* --- TYPOGRAPHIE --- */
-h1, h2, h3, .font-black { font-family: 'Archivo Black', sans-serif; text-transform: uppercase; }
-
-/* --- EFFET TACHE D'ENCRE (Incrustation) --- */
-.ink-splash-mask {
-    position: relative;
-    /* On utilise un masque SVG ou une forme d'éclaboussure */
-    mask-image: url('https://img.freepik.com/vecteurs-libre/eclaboussures-encre-noire-fond-blanc_23-2148821430.jpg'); /* Note: Pour un rendu pro, utilise un PNG de tache d'encre */
-    mask-size: contain;
-    mask-repeat: no-repeat;
-    mask-position: center;
-    /* Version robuste avec clip-path pour simuler des bords déchirés/encre */
-    clip-path: polygon(10% 0%, 90% 5%, 100% 40%, 85% 90%, 50% 100%, 10% 85%, 0% 50%);
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    background: black;
-}
-
-.ink-splash-mask:hover {
-    clip-path: polygon(5% 5%, 95% 0%, 100% 50%, 90% 95%, 50% 90%, 0% 100%, 5% 40%);
-    transform: scale(1.02);
-}
-
-.ink-splash-mask img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(100%) contrast(150%);
-    mix-blend-mode: multiply; /* Fusionne l'image avec le "papier" */
-    transition: 0.5s ease;
-}
-
-.ink-splash-mask:hover img {
-    filter: grayscale(0%) contrast(110%);
-    mix-blend-mode: normal;
-}
-
-/* --- HERO --- */
+/* HERO */
 .hero-section {
-    height: 95vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=80');
+    height: 90vh;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=80');
     background-size: cover;
     background-position: center;
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
 }
 
 .glitch-title {
-    font-size: clamp(3rem, 15vw, 12rem);
-    line-height: 0.8;
-    color: var(--white);
-    text-shadow: 4px 4px var(--red);
-}
-
-/* --- BOUTONS SHONEN --- */
-.btn-shonen {
-    background: var(--red);
+    font-size: clamp(3rem, 15vw, 10rem);
     color: white;
-    padding: 1.5rem 3rem;
-    border: 5px solid black;
-    font-weight: 900;
-    box-shadow: 12px 12px 0px black;
-    transition: 0.2s;
-    cursor: pointer;
+    text-shadow: 6px 6px var(--red);
+    line-height: 0.8;
+    text-transform: uppercase;
 }
 
-.btn-shonen:hover {
-    transform: translate(12px, 12px);
-    box-shadow: 0px 0px 0px black;
+/* INK SPLASH MASK */
+.ink-splash-mask {
+    width: 100%;
+    height: 500px;
+    background: #000;
+    /* On utilise un clip-path complexe pour simuler la tâche d'encre */
+    clip-path: polygon(15% 5%, 85% 0%, 100% 30%, 95% 80%, 70% 100%, 30% 95%, 0% 70%, 5% 20%);
+    overflow: hidden;
 }
 
-/* --- CARROUSEL --- */
+.ink-splash-mask img {
+    filter: grayscale(100%) contrast(130%);
+    transition: 0.5s;
+}
+
+.ink-splash-mask:hover img {
+    filter: grayscale(0%) contrast(100%);
+    transform: scale(1.1);
+}
+
+/* CARROUSEL */
 .animate-infinite-scroll {
     display: flex;
     width: max-content;
@@ -99,10 +56,23 @@ h1, h2, h3, .font-black { font-family: 'Archivo Black', sans-serif; text-transfo
     to { transform: translateX(-50%); }
 }
 
-/* --- AOS ANIMATIONS --- */
-.aos-init {
-    opacity: 0;
-    transform: translateX(-30px);
-    transition: 1s ease-out;
+/* BUTTONS */
+.btn-shonen {
+    background: var(--red);
+    color: white;
+    padding: 1rem 3rem;
+    border: 4px solid black;
+    font-weight: 900;
+    box-shadow: 10px 10px 0px black;
+    transition: 0.2s;
+    text-transform: uppercase;
 }
-.aos-animate { opacity: 1; transform: translateX(0); }
+
+.btn-shonen:hover {
+    transform: translate(10px, 10px);
+    box-shadow: 0px 0px 0px black;
+}
+
+/* AOS */
+.aos-init { opacity: 0; transform: translateY(50px); transition: 1s ease-out; }
+.aos-animate { opacity: 1; transform: translateY(0); }
