@@ -10,11 +10,12 @@ document.addEventListener('alpine:init', () => {
         orderStep: 1,
         formData: { prenom: '', nom: '', adresse: '', ville: '', cp: '' },
 
+        // Tes vrais univers avec les bonnes couleurs
         universes: {
-            all: { bg: 'bg-white', text: 'text-black', accent: 'border-red-600', title: 'COLLECTIONS' },
-            tokyo: { bg: 'bg-indigo-950', text: 'text-fuchsia-500', accent: 'border-fuchsia-500', title: 'TOKYO' },
-            cyber: { bg: 'bg-zinc-900', text: 'text-yellow-400', accent: 'border-yellow-400', title: 'CYBER' },
-            zen: { bg: 'bg-stone-100', text: 'text-emerald-900', accent: 'border-emerald-800', title: 'ZEN' }
+            all: { bg: 'bg-white', text: 'text-black', accent: 'border-red-600', title: 'NOS COLLECTIONS' },
+            tokyo: { bg: 'bg-indigo-950', text: 'text-fuchsia-500', accent: 'border-fuchsia-500', title: 'TOKYO NIGHTS' },
+            cyber: { bg: 'bg-zinc-900', text: 'text-yellow-400', accent: 'border-yellow-400', title: 'CYBER-PUNK' },
+            zen: { bg: 'bg-stone-100', text: 'text-emerald-900', accent: 'border-emerald-800', title: 'ZEN MINIMAL' }
         },
 
         products: [
@@ -23,34 +24,53 @@ document.addEventListener('alpine:init', () => {
                 name: "Hoodie 'Neo-Tokyo'",
                 price: 85,
                 category: 'tokyo',
-                images: { 'Noir': 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=600' },
-                colors: [{name: 'Noir', hex: '#000'}],
+                images: {
+                    'Noir': 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=600',
+                    'Violet': 'https://images.unsplash.com/photo-1554568218-0f1715e72254?q=80&w=600'
+                },
+                colors: [{name: 'Noir', hex: '#000'}, {name: 'Violet', hex: '#8b5cf6'}],
                 selectedSize: 'M',
                 selectedColor: 'Noir'
+            },
+            {
+                id: 2,
+                name: "T-Shirt 'Ghost Kanji'",
+                price: 45,
+                category: 'cyber',
+                images: {
+                    'Blanc': 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=600',
+                    'Jaune': 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=600'
+                },
+                colors: [{name: 'Blanc', hex: '#fff'}, {name: 'Jaune', hex: '#facc15'}],
+                selectedSize: 'L',
+                selectedColor: 'Blanc'
             }
         ],
 
-        addToCart(p) {
-            this.cart.push({...p, cartId: Date.now(), finalImage: p.images[p.selectedColor]});
+        addToCart(product) {
+            this.cart.push({
+                ...product,
+                cartId: Date.now(),
+                finalImage: product.images[product.selectedColor]
+            });
             this.cartOpen = true;
         },
 
-        removeFromCart(i) { this.cart.splice(i, 1); },
+        removeFromCart(index) { this.cart.splice(index, 1); },
+        totalPrice() { return this.cart.reduce((sum, item) => sum + item.price, 0); },
+        toggleCart(state) { this.cartOpen = state; },
         
-        totalPrice() { return this.cart.reduce((s, item) => s + item.price, 0); },
-        
-        toggleCart(s) { this.cartOpen = s; },
-
         goToCheckout() {
-            this.page = 'checkout';
-            this.cartOpen = false;
+            if(this.cart.length > 0) {
+                this.page = 'checkout';
+                this.cartOpen = false;
+                window.scrollTo(0,0);
+            }
         },
 
         processOrder() {
             this.orderStep = 2;
-            setTimeout(() => { this.orderStep = 3; this.cart = []; }, 2000);
-        },
-
-        submitDropForm() { this.showPopup = true; }
+            setTimeout(() => { this.orderStep = 3; this.cart = []; }, 2500);
+        }
     }));
 });
