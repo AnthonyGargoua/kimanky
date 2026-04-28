@@ -13,7 +13,6 @@
         body { font-family: 'Inter', sans-serif; }
         .skew-btn { transform: skewX(-15deg); transition: all 0.2s ease; }
         .skew-content { transform: skewX(15deg); display: inline-block; }
-        .shadow-hard { shadow-offset: 8px 8px; shadow-color: #000; }
     </style>
 </head>
 <body class="bg-white text-black overflow-x-hidden" x-data="shop">
@@ -99,8 +98,8 @@
             <p class="text-xl font-bold uppercase tracking-widest mt-4">Inscris-toi pour ne pas rater le lancement.</p>
         </div>
         <form @submit.prevent="submitDropForm" class="bg-white p-8 text-black border-t-8 border-red-600 max-w-md w-full shadow-[20px_20px_0px_#ff0000]">
-            <input type="text" x-model="formData.prenom" placeholder="Ton Prénom" class="w-full border-4 border-black p-3 mb-4 font-black uppercase outline-none" required>
-            <input type="email" x-model="formData.email" placeholder="Ton Email" class="w-full border-4 border-black p-3 mb-6 font-black uppercase outline-none" required>
+            <input type="text" x-model="formDataDrop.prenom" placeholder="Ton Prénom" class="w-full border-4 border-black p-3 mb-4 font-black uppercase outline-none" required>
+            <input type="email" x-model="formDataDrop.email" placeholder="Ton Email" class="w-full border-4 border-black p-3 mb-6 font-black uppercase outline-none" required>
             <button type="submit" class="w-full bg-black text-white py-4 font-black uppercase italic text-xl skew-btn shadow-[5px_5px_0px_#ff0000]">
                 <span class="skew-content">Rejoindre le Clan</span>
             </button>
@@ -113,8 +112,8 @@
             <div class="grid md:grid-cols-2 gap-8 items-start">
                 <div class="bg-white border-8 border-black p-8 shadow-[15px_15px_0px_#000]">
                     <div class="space-y-4">
-                        <input type="text" x-model="formData.prenom" placeholder="Prénom" class="w-full border-4 border-black p-3 font-black uppercase">
-                        <input type="text" x-model="formData.adresse" placeholder="Adresse complète" class="w-full border-4 border-black p-3 font-black uppercase">
+                        <input type="text" x-model="formDataCheckout.prenom" placeholder="Prénom" class="w-full border-4 border-black p-3 font-black uppercase">
+                        <input type="text" x-model="formDataCheckout.adresse" placeholder="Adresse complète" class="w-full border-4 border-black p-3 font-black uppercase">
                         <button @click="processOrder()" class="w-full bg-red-600 text-white py-4 font-black uppercase italic text-xl skew-btn mt-6">
                             <span class="skew-content" x-text="orderStep === 2 ? 'Traitement...' : 'Payer ' + (totalPrice() + shipping).toFixed(2) + '€'"></span>
                         </button>
@@ -132,64 +131,47 @@
             </div>
         </div>
         <div x-show="orderStep === 3" class="text-center py-20 animate__animated animate__zoomIn">
-            <h2 class="text-7xl font-black uppercase italic mb-4">Merci <span class="text-red-600" x-text="formData.prenom"></span> !</h2>
+            <h2 class="text-7xl font-black uppercase italic mb-4">Merci <span class="text-red-600" x-text="formDataCheckout.prenom"></span> !</h2>
             <p class="font-bold text-xl uppercase tracking-widest">Ta commande est en route.</p>
             <button @click="page = 'home'; orderStep = 1" class="mt-10 underline font-black uppercase">Retour Accueil</button>
         </div>
     </div>
 
     <footer class="bg-black text-white pt-20 pb-10 px-6 border-t-[12px] border-red-600 relative overflow-hidden">
-    <div class="absolute top-0 right-0 text-[15rem] font-black italic text-white/5 pointer-events-none select-none translate-x-1/4 -translate-y-1/4">
-        KYANTO
-    </div>
-
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
-        <div class="md:col-span-1">
-            <div class="text-4xl font-[900] italic uppercase mb-4">KY<span class="text-red-600">ANTO</span></div>
-            <p class="text-gray-400 font-bold text-xs leading-relaxed uppercase tracking-widest">
-                Deux identités.<br>Une seule direction.<br>Le Clan du Streetwear.
-            </p>
-        </div>
-
-        <div>
-            <h4 class="font-black uppercase text-red-600 mb-6 italic tracking-tighter">Collections</h4>
-            <ul class="space-y-3 text-xs font-bold uppercase tracking-widest">
-                <li><button @click="page='shop'; filter='tokyo'" class="hover:text-red-600 transition">Tokyo Nights</button></li>
-                <li><button @click="page='shop'; filter='cyber'" class="hover:text-red-600 transition">Cyber-Punk</button></li>
-                <li><button @click="page='shop'; filter='zen'" class="hover:text-red-600 transition">Zen Minimal</button></li>
-            </ul>
-        </div>
-
-        <div>
-            <h4 class="font-black uppercase text-red-600 mb-6 italic tracking-tighter">Support</h4>
-            <ul class="space-y-3 text-xs font-bold uppercase tracking-widest">
-                <li><a href="#" class="hover:text-red-600 transition">FAQ</a></li>
-                <li><a href="#" class="hover:text-red-600 transition">Livraison</a></li>
-                <li><a href="#" class="hover:text-red-600 transition">Retours</a></li>
-            </ul>
-        </div>
-
-        <div>
-            <h4 class="font-black uppercase text-red-600 mb-6 italic tracking-tighter">Rejoindre le Clan</h4>
-            <div class="flex gap-6">
-                <a href="#" class="group">
-                    <span class="block border-2 border-white p-2 group-hover:bg-red-600 group-hover:border-red-600 transition">INSTA</span>
-                </a>
-                <a href="#" class="group">
-                    <span class="block border-2 border-white p-2 group-hover:bg-red-600 group-hover:border-red-600 transition">TIKTOK</span>
-                </a>
+        <div class="absolute top-0 right-0 text-[15rem] font-black italic text-white/5 pointer-events-none select-none translate-x-1/4 -translate-y-1/4">KYANTO</div>
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10 text-left">
+            <div>
+                <div class="text-4xl font-[900] italic uppercase mb-4">KY<span class="text-red-600">ANTO</span></div>
+                <p class="text-gray-400 font-bold text-xs leading-relaxed uppercase tracking-widest">Deux identités.<br>Une seule direction.<br>Le Clan du Streetwear.</p>
+            </div>
+            <div>
+                <h4 class="font-black uppercase text-red-600 mb-6 italic tracking-tighter">Collections</h4>
+                <ul class="space-y-3 text-xs font-bold uppercase tracking-widest">
+                    <li><button @click="page='shop'; filter='tokyo'" class="hover:text-red-600 transition">Tokyo Nights</button></li>
+                    <li><button @click="page='shop'; filter='cyber'" class="hover:text-red-600 transition">Cyber-Punk</button></li>
+                    <li><button @click="page='shop'; filter='zen'" class="hover:text-red-600 transition">Zen Minimal</button></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-black uppercase text-red-600 mb-6 italic tracking-tighter">Support</h4>
+                <ul class="space-y-3 text-xs font-bold uppercase tracking-widest">
+                    <li><a href="#" class="hover:text-red-600 transition">FAQ</a></li>
+                    <li><a href="#" class="hover:text-red-600 transition">Livraison</a></li>
+                    <li><a href="#" class="hover:text-red-600 transition">Retours</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-black uppercase text-red-600 mb-6 italic tracking-tighter">Rejoindre le Clan</h4>
+                <div class="flex gap-6">
+                    <a href="#" class="group border-2 border-white p-2 hover:bg-red-600 hover:border-red-600 transition text-xs font-black uppercase tracking-tighter">INSTA</a>
+                    <a href="#" class="group border-2 border-white p-2 hover:bg-red-600 hover:border-red-600 transition text-xs font-black uppercase tracking-tighter">TIKTOK</a>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/10 flex flex-col md:row justify-between items-center gap-4 text-[10px] font-black text-gray-600 tracking-[0.5em]">
-        <p>© 2026 KYANTO CLOTHING - DESIGNED FOR THE STREETS</p>
-        <div class="flex gap-8">
-            <a href="#" class="hover:text-white transition">CGV</a>
-            <a href="#" class="hover:text-white transition">CONFIDENTIALITÉ</a>
+        <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/10 flex flex-col md:row justify-between items-center gap-4 text-[10px] font-black text-gray-600 tracking-[0.5em]">
+            <p>© 2026 KYANTO CLOTHING - DESIGNED FOR THE STREETS</p>
         </div>
-    </div>
-</footer>
+    </footer>
 
     <div x-show="cartOpen" class="fixed inset-0 z-[150]" x-cloak>
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" @click="toggleCart(false)"></div>
