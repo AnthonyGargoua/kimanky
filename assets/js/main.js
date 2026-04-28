@@ -87,5 +87,27 @@ document.addEventListener('alpine:init', () => {
         toggleCart(state) { this.cartOpen = state; },
         submitDropForm() { this.showPopup = true; },
         removeFromCart(index) { this.cart.splice(index, 1); }
+
+        // --- NOUVELLES FONCTIONS CHECKOUT ---
+        goToCheckout() {
+            if(this.cart.length > 0) {
+                this.page = 'checkout';
+                this.cartOpen = false;
+                window.scrollTo(0,0);
+            }
+        },
+
+        processOrder() {
+            this.orderStep = 2; // État : Chargement
+            setTimeout(() => {
+                this.orderStep = 3; // État : Succès
+                this.cart = []; // Vide le panier
+            }, 2500);
+        },
+
+        totalPrice() { 
+            return this.cart.reduce((sum, item) => sum + item.price, 0); 
+        },
+        
     }));
 });
